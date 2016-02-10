@@ -1,0 +1,34 @@
+// this is the core file that everything depends on
+
+//***************************************************************************************************\
+//                                                                    | Helper Functions
+//***************************************************************************************************/
+
+@function selector-nth($sel, $n, $f, $args...) {
+	$collector: ();
+	@each $s in $sel {
+		$modified: call($f, nth($s, $n), $args...);
+		$collector: append($collector, set-nth($s, $n, $modified), comma);
+	}
+
+	@return $collector;
+}
+
+// shortcut functions for commonly used positions
+@function selector-first($sel, $f, $args) {
+	@return selector-nth($sel, 1, $f, $args...);
+}
+
+@function selector-last($sel, $f, $args) {
+	@return selector-nth($sel, -1, $f, $args...);
+}
+
+//***************************************************************************************************\
+//                                                                    | Helper Mixin
+//***************************************************************************************************/
+
+@mixin selector-nth($n, $f, $args...) {
+	@at-root #{selector-nth(&, $n, $f, $args...)} {
+		@content;
+	}
+}

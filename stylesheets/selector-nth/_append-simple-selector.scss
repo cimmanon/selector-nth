@@ -1,0 +1,50 @@
+//***************************************************************************************************\
+//                                                                    | Helper Functions
+//***************************************************************************************************/
+
+@function is-elem-selector($sel) {
+	// if the first character is a letter, then we have an element selector
+	$first-char: str-slice($sel, 1, 1);
+	@return elem($first-char, (a b c d e f g h i j k l m n o p q r s t u v w x y z));
+}
+
+@function is-pseudo-selector($sel) {
+	@return str-slice($sel, 1, 1) == ':';
+}
+
+// this function will take a selector and append a simple selector to it
+// in such a way that element selectors remain at the beginning and
+// pseudo selectors remain at the end.
+@function append-simple-selector($sel, $class) {
+	$elems: simple-selectors($sel);
+	$first: nth($elems, 1);
+
+	// if $class is a pseudo selector, tack it on the end
+	@if is-pseudo-selector($class) {
+		@return #{$sel}#{$class};
+	// if an element selector is first, we have to tack on the class after that
+	} @else if is-elem-selector($first) {
+		$collector: #{$first}#{$class};
+
+		@if length($elems) > 1 {
+			@for $i from 2 through length($elems) {
+				$collector: #{$collector}#{nth($elems, $i)};
+			}
+		}
+
+		@return $collector;
+	// otherwise the class can go first
+	} @else {
+		@return #{$class}#{$sel};
+	}
+}
+
+//***************************************************************************************************\
+//                                                                    | Helper Mixin
+//***************************************************************************************************/
+
+@mixin append-simple-selector($n, $sel) {
+	@at-root #{selector-nth(&, $n, 'append-simple-selector', $sel)} {
+		@content;
+	}
+}
