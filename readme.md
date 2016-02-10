@@ -14,7 +14,7 @@ The `selector-nth` function has 4 arguments:
 	two {
 		three {
 			&:before {
-				@at-root #{selector-nth(&, 2, append-smart-selector, '.new')} {
+				@at-root #{selector-nth(&, 2, smart-append-selector, '.new')} {
 					color: blue;
 				}
 			}
@@ -38,9 +38,9 @@ Using the function directly allows for easier debugging, but mixins are more con
 	two {
 		three {
 			&:before {
-				@debug selector-nth(&, -1, append-smart-selector, '.new');
-				@debug selector-nth(&, -2, append-smart-selector, '.new');
-				@debug selector-nth(&, -3, append-smart-selector, '.new');
+				@debug selector-nth(&, -1, smart-append-selector, '.new');
+				@debug selector-nth(&, -2, smart-append-selector, '.new');
+				@debug selector-nth(&, -3, smart-append-selector, '.new');
 			}
 		}
 	}
@@ -57,7 +57,7 @@ This function will properly insert a selector ensuring that element selectors ar
 	two {
 		three {
 			&:before {
-				@at-root #{selector-nth(&, 2, append-smart-selector, '.new')} {
+				@at-root #{selector-nth(&, 2, smart-append-selector, '.new')} {
 					color: blue;
 				}
 

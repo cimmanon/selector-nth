@@ -15,7 +15,7 @@
 // this function will take a selector and append a simple selector to it
 // in such a way that element selectors remain at the beginning and
 // pseudo selectors remain at the end.
-@function append-smart-selector($sel, $class) {
+@function smart-append-selector($sel, $class) {
 	$elems: simple-selectors($sel);
 	$first: nth($elems, 1);
 
@@ -44,7 +44,7 @@
 //***************************************************************************************************/
 
 @mixin nth-append-selector($n, $sel) {
-	@at-root #{selector-nth(&, $n, 'append-smart-selector', $sel)} {
+	@at-root #{selector-nth(&, $n, 'smart-append-selector', $sel)} {
 		@content;
 	}
 }
