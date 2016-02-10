@@ -14,15 +14,15 @@ The `selector-nth` function has 4 arguments:
 	two {
 		three {
 			&:before {
-				@at-root #{selector-nth(&, 1, append-simple-selector, '.new')} {
+				@at-root #{selector-nth(&, 1, append-smart-selector, '.new')} {
 					color: red;
 				}
 
-				@at-root #{selector-nth(&, 2, append-simple-selector, '.new')} {
+				@at-root #{selector-nth(&, 2, append-smart-selector, '.new')} {
 					color: blue;
 				}
 
-				@at-root #{selector-nth(&, 3, append-simple-selector, '.new')} {
+				@at-root #{selector-nth(&, 3, append-smart-selector, '.new')} {
 					color: green;
 				}
 			}
@@ -52,9 +52,9 @@ Using the function directly allows for easier debugging, but mixins are more con
 	two {
 		three {
 			&:before {
-				@debug selector-nth(&, -1, append-simple-selector, '.new');
-				@debug selector-nth(&, -2, append-simple-selector, '.new');
-				@debug selector-nth(&, -3, append-simple-selector, '.new');
+				@debug selector-nth(&, -1, append-smart-selector, '.new');
+				@debug selector-nth(&, -2, append-smart-selector, '.new');
+				@debug selector-nth(&, -3, append-smart-selector, '.new');
 			}
 		}
 	}
@@ -71,15 +71,15 @@ This function will properly insert a selector ensuring that element selectors ar
 	two {
 		three {
 			&:before {
-				@include append-simple-selector(1, '.new') {
+				@include nth-append-selector(1, '.new') {
 					color: red;
 				}
 
-				@include append-simple-selector(2, '.new') {
+				@include nth-append-selector(2, '.new') {
 					color: blue;
 				}
 
-				@include append-simple-selector(3, '.new') {
+				@include nth-append-selector(3, '.new') {
 					color: green;
 				}
 			}
@@ -110,15 +110,15 @@ The `add-sibling-selector` function takes an optional 2nd argument.  By default 
 .one-a, .one-b {
 	two {
 		three {
-			@include add-sibling-selector(1) {
+			@include nth-sibling-selector(1) {
 				color: red;
 			}
 
-			@include add-sibling-selector(2) {
+			@include nth-sibling-selector(2) {
 				color: blue;
 			}
 
-			@include add-sibling-selector(3, '~') {
+			@include nth-sibling-selector(3, '~') {
 				color: green;
 			}
 		}
@@ -148,15 +148,15 @@ Ever wanted to remove a selector for whatever reason?
 .one-a, .one-b {
 	two {
 		three {
-			@include remove-selector(1) {
+			@include nth-remove-selector(1) {
 				color: red;
 			}
 
-			@include remove-selector(2) {
+			@include nth-remove-selector(2) {
 				color: blue;
 			}
 
-			@include remove-selector(3) {
+			@include nth-remove-selector(3) {
 				color: green;
 			}
 		}

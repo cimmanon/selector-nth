@@ -12,7 +12,7 @@
 //                                                                    | Helper Mixin
 //***************************************************************************************************/
 
-@mixin add-sibling-selector($n, $operator: '+') {
+@mixin nth-sibling-selector($n, $operator: '+') {
 	@at-root #{selector-nth(&, $n, 'add-sibling-selector', $operator)} {
 		@content;
 	}
