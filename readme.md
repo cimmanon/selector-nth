@@ -14,16 +14,8 @@ The `selector-nth` function has 4 arguments:
 	two {
 		three {
 			&:before {
-				@at-root #{selector-nth(&, 1, append-smart-selector, '.new')} {
-					color: red;
-				}
-
 				@at-root #{selector-nth(&, 2, append-smart-selector, '.new')} {
 					color: blue;
-				}
-
-				@at-root #{selector-nth(&, 3, append-smart-selector, '.new')} {
-					color: green;
 				}
 			}
 		}
@@ -34,14 +26,8 @@ The `selector-nth` function has 4 arguments:
 Output:
 
 ```css
-.one-a.new two three:before, .one-b.new two three:before {
-  color: red;
-}
 .one-a two.new three:before, .one-b two.new three:before {
   color: blue;
-}
-.one-a two three.new:before, .one-b two three.new:before {
-  color: green;
 }
 ```
 
@@ -71,16 +57,12 @@ This function will properly insert a selector ensuring that element selectors ar
 	two {
 		three {
 			&:before {
-				@include nth-append-selector(1, '.new') {
-					color: red;
+				@at-root #{selector-nth(&, 2, append-smart-selector, '.new')} {
+					color: blue;
 				}
 
 				@include nth-append-selector(2, '.new') {
 					color: blue;
-				}
-
-				@include nth-append-selector(3, '.new') {
-					color: green;
 				}
 			}
 		}
@@ -91,14 +73,8 @@ This function will properly insert a selector ensuring that element selectors ar
 Output:
 
 ```css
-.one-a.new two three:before, .one-b.new two three:before {
-  color: red;
-}
 .one-a two.new three:before, .one-b two.new three:before {
   color: blue;
-}
-.one-a two three.new:before, .one-b two three.new:before {
-  color: green;
 }
 ```
 
@@ -110,8 +86,8 @@ The `add-sibling-selector` function takes an optional 2nd argument.  By default 
 .one-a, .one-b {
 	two {
 		three {
-			@include nth-sibling-selector(1) {
-				color: red;
+			@at-root #{selector-nth(&, 2, add-sibling-selector)} {
+				color: blue;
 			}
 
 			@include nth-sibling-selector(2) {
@@ -129,9 +105,6 @@ The `add-sibling-selector` function takes an optional 2nd argument.  By default 
 Output:
 
 ```css
-.one-a + .one-a two three, .one-b + .one-b two three {
-  color: red;
-}
 .one-a two + two three, .one-b two + two three {
   color: blue;
 }
@@ -148,16 +121,12 @@ Ever wanted to remove a selector for whatever reason?
 .one-a, .one-b {
 	two {
 		three {
-			@include nth-remove-selector(1) {
-				color: red;
+			@at-root #{selector-nth(&, 2, remove-selector)} {
+				color: blue;
 			}
 
 			@include nth-remove-selector(2) {
 				color: blue;
-			}
-
-			@include nth-remove-selector(3) {
-				color: green;
 			}
 		}
 	}
@@ -167,13 +136,7 @@ Ever wanted to remove a selector for whatever reason?
 Output:
 
 ```css
-two three, two three {
-  color: red;
-}
 .one-a three, .one-b three {
   color: blue;
-}
-.one-a two, .one-b two {
-  color: green;
 }
 ```
