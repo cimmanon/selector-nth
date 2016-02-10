@@ -1,0 +1,17 @@
+.one-a, .one-b {
+	two {
+		three {
+			@include nth-remove-selector(1) {
+				color: red;
+			}
+
+			@include nth-remove-selector(2) {
+				color: blue;
+			}
+
+			@include nth-remove-selector(3) {
+				color: green;
+			}
+		}
+	}
+}

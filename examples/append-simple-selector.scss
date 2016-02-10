@@ -1,0 +1,19 @@
+.one-a, .one-b {
+	two {
+		three {
+			&:before {
+				@include nth-append-selector(1, '.new') {
+					color: red;
+				}
+
+				@include nth-append-selector(2, '.new') {
+					color: blue;
+				}
+
+				@include nth-append-selector(3, '.new') {
+					color: green;
+				}
+			}
+		}
+	}
+}

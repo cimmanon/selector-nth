@@ -1,0 +1,31 @@
+.one-a, .one-b {
+	two {
+		three {
+			/* Adjacent Sibling */
+			@include nth-sibling-selector(1) {
+				color: red;
+			}
+
+			@include nth-sibling-selector(2) {
+				color: blue;
+			}
+
+			@include nth-sibling-selector(3) {
+				color: green;
+			}
+
+			/* General Sibling Selector */
+			@include nth-sibling-selector(1, '~') {
+				color: red;
+			}
+
+			@include nth-sibling-selector(2, '~') {
+				color: blue;
+			}
+
+			@include nth-sibling-selector(3, '~') {
+				color: green;
+			}
+		}
+	}
+}
