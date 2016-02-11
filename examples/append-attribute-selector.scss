@@ -1,0 +1,13 @@
+.one-a, .one-b {
+	two {
+		three[foo], three[foo="boo"], three[foo='moo'] {
+			&:before {
+				@at-root #{selector-nth(&, 3, smart-append-attribute-selector, 'xyz')} {
+
+				@include nth-append-attribute-selector(3, 'new') {
+					color: green;
+				}
+			}
+		}
+	}
+}

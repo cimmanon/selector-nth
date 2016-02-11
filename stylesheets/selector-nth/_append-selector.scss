@@ -1,16 +1,8 @@
+@import "helpers/selector-types";
+
 //***************************************************************************************************\
 //                                                                    | Helper Functions
 //***************************************************************************************************/
-
-@function is-elem-selector($sel) {
-	// if the first character is a letter, then we have an element selector
-	$first-char: str-slice($sel, 1, 1);
-	@return elem($first-char, (a b c d e f g h i j k l m n o p q r s t u v w x y z));
-}
-
-@function is-pseudo-selector($sel) {
-	@return str-slice($sel, 1, 1) == ':';
-}
 
 // this function will take a selector and append a simple selector to it
 // in such a way that element selectors remain at the beginning and

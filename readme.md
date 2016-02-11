@@ -113,6 +113,36 @@ Output:
 }
 ```
 
+# Append attribute selector value
+
+The `smart-append-attribute-selector` function takes an optional 2nd argument.  By default it uses a hyphen when appending the new attribute value to an existing attribute value.
+
+
+```scss
+.one-a, .one-b {
+	two {
+		three[foo], three[foo="boo"], three[foo='moo'] {
+			&:before {
+				@at-root #{selector-nth(&, 3, smart-append-attribute-selector, 'xyz')} {
+
+				@include nth-append-attribute-selector(3, 'new') {
+					color: green;
+				}
+			}
+		}
+	}
+}
+```
+
+Output:
+
+```css
+.one-a two three[foo="new"]:before, .one-a two three[foo="boo-new"]:before, .one-a two three[foo='moo-new']:before,
+.one-b two three[foo="new"]:before, .one-b two three[foo="boo-new"]:before, .one-b two three[foo='moo-new']:before {
+  color: green;
+}
+```
+
 # Removing a selector
 
 Ever wanted to remove a selector for whatever reason?

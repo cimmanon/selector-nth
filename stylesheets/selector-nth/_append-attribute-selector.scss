@@ -1,0 +1,40 @@
+@import "helpers/selector-types";
+
+$default-selector-separator: '-' !default;
+
+//***************************************************************************************************\
+//                                                                    | Helper Functions
+//***************************************************************************************************/
+
+// this function will append
+@function smart-append-attribute-selector($sel, $class, $separator: $default-selector-separator) {
+	$elems: simple-selectors($sel);
+	$sel: '';
+
+	@for $i from 1 through length($elems) {
+		$s: nth($elems, $i);
+		@if is-attribute-selector($s) {
+			$tail: str-slice($s, -2, -1);
+			// matches attribute selectors with a value: foo[bar="one"] or foo[bar='one']
+			// yes, this requires the attribute value to be quoted
+			@if index(("\"]", "']"), $tail) {
+				$s: str-insert($s, '#{$separator}#{$class}', -3);
+			} @else {
+				$s: str-insert($s, '="#{$class}"', -2);
+			}
+		}
+		$sel: #{$sel}#{$s};
+	}
+
+	@return $sel;
+}
+
+//***************************************************************************************************\
+//                                                                    | Helper Mixin
+//***************************************************************************************************/
+
+@mixin nth-append-attribute-selector($n, $sel) {
+	@at-root #{selector-nth(&, $n, 'smart-append-attribute-selector', $sel)} {
+		@content;
+	}
+}
