@@ -57,12 +57,12 @@ This function will properly insert a selector ensuring that element selectors ar
 	two {
 		three {
 			&:before {
-				@at-root #{selector-nth(&, 2, smart-append-selector, '.new')} {
-					color: blue;
+				@at-root #{selector-nth(&, 3, smart-append-selector, '.new')} {
+					color: green;
 				}
 
-				@include nth-append-selector(2, '.new') {
-					color: blue;
+				@include nth-append-selector(3, '.new') {
+					color: green;
 				}
 			}
 		}
@@ -73,8 +73,8 @@ This function will properly insert a selector ensuring that element selectors ar
 Output:
 
 ```css
-.one-a two.new three:before, .one-b two.new three:before {
-  color: blue;
+.one-a two three.new:before, .one-b two three.new:before {
+  color: green;
 }
 ```
 
