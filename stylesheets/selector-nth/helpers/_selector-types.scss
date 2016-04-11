@@ -1,7 +1,12 @@
+// return a boolean rather than the position of the element
+@function elem($xs, $x) {
+	@return not (not index($xs, $x));
+}
+
 @function is-elem-selector($sel) {
 	// if the first character is a letter, then we have an element selector
 	$first-char: str-slice($sel, 1, 1);
-	@return elem($first-char, (a b c d e f g h i j k l m n o p q r s t u v w x y z));
+	@return elem((a b c d e f g h i j k l m n o p q r s t u v w x y z), $first-char);
 }
 
 @function is-pseudo-selector($sel) {
