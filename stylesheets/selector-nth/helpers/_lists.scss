@@ -21,3 +21,11 @@
 	}
 	@return $collector;
 }
+
+// this function probably won't stay here
+@function map($function, $xs, $optional...) {
+	$collector: ();
+	@each $x in $xs {
+		$collector: append($collector, apply($function, $x, $optional...), list-separator($xs));
+	}
+}
