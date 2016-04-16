@@ -1,0 +1,23 @@
+@function list-slice($xs, $start: 1, $end: -1) {
+	$collector: ();
+	// calculate our true start and end indices when given negative numbers
+	$_s: if($start > 0, min($start, length($xs)), length($xs) + $start + 1);
+	$_e: if($end > 0, min($end, length($xs)), length($xs) + $end + 2);
+
+	// make sure our true start and end values aren't out of bounds
+	@if $_s <= length($xs) and $_e <= length($xs) {
+		@for $i from $_s through $_e {
+			$collector: append($collector, nth($xs, $i));
+		}
+	}
+	@return $collector;
+}
+
+// can't think of a better name than to use the one in PHP (and `join` is taken already)
+@function implode($xs, $glue: '') {
+	$collector: if(length($xs) > 0, nth($xs, 1), '');
+	@each $x in list-slice($xs, 2) {
+		$collector: #{$collector}#{$glue}#{$x};
+	}
+	@return $collector;
+}
