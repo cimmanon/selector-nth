@@ -13,6 +13,20 @@
 	@return str-slice($sel, 1, 1) == ':';
 }
 
+@function is-pseudo-element($sel) {
+	// beginning with a double colon *always* indicate pseudo-element
+	@if str-slice($sel, 1, 2) == '::' {
+		@return true;
+	// if it isn't a pseudo-selector at all, then it can't be a pseudo-element either
+	} @else if not is-pseudo-selector($sel) {
+		@return false;
+	// check our list of known pseudo-elements (this will have to be updated by hand)
+	} @else {
+		// list of pseudo-elements pulled from MDN: https://developer.mozilla.org/en/docs/Web/CSS/Pseudo-elements
+		@return elem((before, after, first-line, first-letter, selection, backdrop, placeholder, marker, spelling-error, grammar-error), str-slice($sel, 2));
+	}
+}
+
 // checks if the last character of the selector is a square bracket
 @function is-attribute-selector($sel) {
 	@return str-slice($sel, -1, -1) == ']';

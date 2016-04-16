@@ -1,4 +1,5 @@
 @import "helpers/selector-types";
+@import "helpers/lists";
 
 //***************************************************************************************************\
 //                                                                    | Helper Functions
@@ -10,21 +11,30 @@
 @function smart-append-selector($sel, $class) {
 	$elems: simple-selectors($sel);
 	$first: nth($elems, 1);
+	$last: nth($elems, -1);
 
-	// if $class is a pseudo selector, tack it on the end
 	@if is-pseudo-selector($class) {
-		@return #{$sel}#{$class};
+		// if the last element is a pseudo-element, we have to make sure it stays in the last position
+		@if is-pseudo-element($last) {
+			// can this be simplified at all?
+			// grab all but the last element and tack on the new class
+			$init: #{implode(list-slice($elems, 1, -2))}#{$class};
+			// if what we're appending is *also* a pseudo-element, we're just going to drop the old one,
+			// effectively replacing it with the new one
+			@if is-pseudo-element($class) {
+				@warn "This selector already has a pseudo element of #{$last}, replacing it with #{$class}";
+				@return #{$init};
+			// otherwise, it is safe to tack on the old one at the end
+			} @else {
+				@return #{$init}#{$last};
+			}
+		// otherwise, we can just tack it onto the end
+		} @else {
+			@return #{$sel}#{$class};
+		}
 	// if an element selector is first, we have to tack on the class after that
 	} @else if is-elem-selector($first) {
-		$collector: #{$first}#{$class};
-
-		@if length($elems) > 1 {
-			@for $i from 2 through length($elems) {
-				$collector: #{$collector}#{nth($elems, $i)};
-			}
-		}
-
-		@return $collector;
+		@return #{$first}#{$class}#{implode(list-slice($sel, 2))};
 	// otherwise the class can go first
 	} @else {
 		@return #{$class}#{$sel};
