@@ -5,13 +5,12 @@
 //***************************************************************************************************/
 
 @function selector-nth($sel, $n, $f, $args...) {
-	$collector: ();
-	@each $s in $sel {
-		$modified: call($f, nth($s, $n), $args...);
-		$collector: append($collector, set-nth($s, $n, $modified), comma);
-	}
+	@return map(modify-nth, $sel, $n, $f, $args...);
+}
 
-	@return $collector;
+@function modify-nth($xs, $n, $f, $args...) {
+	$modified: call($f, nth($xs, $n), $args...);
+	@return set-nth($xs, $n, $modified);
 }
 
 // shortcut functions for commonly used positions

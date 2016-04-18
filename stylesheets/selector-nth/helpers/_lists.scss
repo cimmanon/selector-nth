@@ -26,6 +26,7 @@
 @function map($function, $xs, $optional...) {
 	$collector: ();
 	@each $x in $xs {
-		$collector: append($collector, apply($function, $x, $optional...), list-separator($xs));
+		$collector: append($collector, call($function, $x, $optional...), list-separator($xs));
 	}
+	@return $collector;
 }
